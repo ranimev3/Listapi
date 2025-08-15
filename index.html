@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anichin API Documentation</title>
+    <title>List API Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="https://anime.amwp.website/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
@@ -133,7 +133,7 @@
     <div class="container mx-auto p-8">
         <header class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-2">Anichin API Documentation</h1>
-            <p class="text-lg">Version 1.0.0 | Owner: AMWP (Afif Medya)</p>
+            <p class="text-lg">Version 1.0.0 | Owner: AMWP (Ahmad Riza)</p>
             <button id="theme-toggle" class="mt-4 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Toggle Light/Dark Mode</button>
         </header>
 
@@ -148,7 +148,7 @@
                         <span class="method-badge get">GET</span>
                     </div>
                     <p class="mb-4">Home Page Anichin</p>
-                    <a href="https://anichin-api.amwp.website/home" class="text-blue-400 hover:underline">https://anichin-api.amwp.website/home</a>
+                    <a href="https://listapi-nine.vercel.app/api/home" class="text-blue-400 hover:underline">https://listapi-nine.vercel.app/api/home</a>
 
                     <h4 class="text-lg font-semibold mt-4">Example Response:</h4>
                     <pre class="code-block typing"><code class="language-json" id="home-example"></code></pre>
@@ -209,11 +209,11 @@
                 <!-- //genres/:genrename -->
                 <div class="api-card p-6 shadow rounded">
                     <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xl font-semibold">/genres/:genrename</h3>
+                        <h3 class="text-xl font-semibold">/api/genres/:genrename</h3>
                         <span class="method-badge get">GET</span>
                     </div>
                     <p class="mb-4">Genres List.</p>
-                    <a href="https://anichin-api.amwp.website/genres/gore" class="text-blue-400 hover:underline">https://anichin-api.amwp.website/genres/:genrename</a>
+                    <a href="https://listapi-nine.vercel.app/api/genres/gore" class="text-blue-400 hover:underline">https://list-nine.vercel.app/genres/:genrename</a>
 
                     <h4 class="text-lg font-semibold mt-4">Example Response:</h4>
                     <pre class="code-block typing"><code class="language-json" id="genres-example"></code></pre>
@@ -296,12 +296,12 @@
             }
         }
     
-        fetchExample('/home', 'home-example');
-        fetchExample('/episode/dubu-xiaoyao-episode-445-subtitle-indonesia/', 'episode-example');
-        fetchExample('/completed/1', 'completed-example');
-        fetchExample('/seri/ancient-lords/', 'seri-example');
-        fetchExample('/ongoing', 'ongoing-example');
-        fetchExample('/genres/gore', 'genres-example');
+        fetchExample('/api/home', 'home-example');
+        fetchExample('/api/episode/dubu-xiaoyao-episode-445-subtitle-indonesia/', 'episode-example');
+        fetchExample('/api/completed/1', 'completed-example');
+        fetchExample('/api/seri/ancient-lords/', 'seri-example');
+        fetchExample('/api/ongoing', 'ongoing-example');
+        fetchExample('/api/genres/gore', 'genres-example');
     </script>
 </body>
 
