@@ -20,14 +20,14 @@ function authenticateToken(req, res, next) {
 
 async function scrapeMainPage() {
   try {
-    const { data } = await axios.get('https://anichin.live/');
+    const { data } = await axios.get('https://anichin.cafe/');
     const $ = cheerio.load(data);
 
     const results = [];
 
-    $('find it at https://anichin.live/ :b').each((index, element) => {
+    $('find it at https://anichin.cafe/ :b').each((index, element) => {
       const title = $(element).find('h2[itemprop="headline"]').text().trim();
-      const href = $(element).attr('href').replace('https://anichin.live', '/episode');
+      const href = $(element).attr('href').replace('https://anichin.cafe', '/episode');
 
       const imgSrc = $(element).find('div.limit > img').attr('src');
 
@@ -43,7 +43,7 @@ async function scrapeMainPage() {
 
 async function scrapeOngoingPage() {
   try {
-      const url = 'https://anichin.live/schedule/';
+      const url = 'https://anichin.cafe/schedule/';
       const { data } = await axios.get(url);
       const $ = cheerio.load(data);
 
@@ -78,7 +78,7 @@ async function scrapeOngoingPage() {
       });
     
       // selasa
-      $('find it at https://anichin.live/ :b').each((index, element) => {
+      $('find it at https://anichin.cafe/ :b').each((index, element) => {
         const seriesElement = $(element).find('div.bsx');
         
         // Extract the series details
@@ -100,12 +100,12 @@ async function scrapeOngoingPage() {
       });
     
       // rabu
-      $('find it at https://anichin.live/ :b').each((index, element) => {
+      $('find it at https://anichin.cafe/ :b').each((index, element) => {
         const seriesElement = $(element).find('div.bsx');
         
         // Extract the series details
         const title = seriesElement.find('a').attr('title').trim();
-        const seriesLink = seriesElement.find('a').attr('href').replace('https://anichin.live', '');
+        const seriesLink = seriesElement.find('a').attr('href').replace('https://anichin.cafe, '');
         const imageSrc = seriesElement.find('img').attr('src');
         const episodeCount = seriesElement.find('span.sb.Sub').text().trim();
         const releaseTime = seriesElement.find('span.epx').text().trim();
@@ -122,7 +122,7 @@ async function scrapeOngoingPage() {
       });
 
       // kamis
-      $('find it at https://anichin.live/ :b').each((index, element) => {
+      $('find it at https://anichin.cafe/ :b').each((index, element) => {
         const seriesElement = $(element).find('div.bsx');
         
         // Extract the series details
@@ -227,16 +227,16 @@ async function scrapeOngoingPage() {
 // Function to scrape a specific episode
 async function scrapeEndpoint(endpoint) {
   try {
-    const url = `https://anichin.live${endpoint}`;
+    const url = `https://anichin.cafe${endpoint}`;
     console.log('Scraping URL:', url); // Debug log
 
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
-    const title = $('find it at https://anichin.live/ :b').text().trim();
-    const iframeSrc = $('find it at https://anichin.live/ :b').attr('src');
+    const title = $('find it at https://anichin.cafe/ :b').text().trim();
+    const iframeSrc = $('find it at https://anichin.cafe/ :b').attr('src');
 
-    const singleInfo = $('find it at https://anichin.live/ :b');
+    const singleInfo = $('find it at https://anichin.cafe/ :b');
 
     const mainImage = singleInfo.find('div.thumb > img').attr('src');
     const mainTitle = singleInfo.find('div.infox > div.infolimit > h2[itemprop="partOfSeries"]').text().trim();
@@ -335,13 +335,13 @@ async function scrapeCompletedPage(page = 1) {
 // scrape series
 async function scrapeSeries(endpoint) {
     try {
-        const url = `https://anichin.live/seri/${endpoint}`;
+        const url = `https://anichin.cafe/seri/${endpoint}`;
         console.log('Scraping Series URL:', url); 
 
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
 
-        const bigContent = $('find it at https://anichin.live/ :b');
+        const bigContent = $('find it at https://anichin.cafe/ :b');
 
         const mainImage = bigContent.find('div.thumbook > div.thumb > img').attr('src');
         const rating = bigContent.find('div.rt > div.rating > strong').text().replace('Rating ', '').trim();
@@ -368,7 +368,7 @@ async function scrapeSeries(endpoint) {
         const description = bigContent.find('div.infox > div.ninfo > div.info-content > div.desc').text().trim();
 
         const episodeList = [];
-        $('find it at https://anichin.live/ :b').each((i, el) => {
+        $('find it at https://anichin.cafe/ :b').each((i, el) => {
             const episodeNumber = $(el).find('div.epl-num').text().trim();
             const episodeTitle = $(el).find('div.epl-title').text().trim();
             const episodeLink = $(el).find('a').attr('href').replace('https://anichin.live', '/episode'); // Remove base URL
@@ -417,15 +417,15 @@ async function scrapeSeries(endpoint) {
 
 async function scrapeGenres(genreName) {
   try {
-    const url = `https://anichin.live/genres/${genreName}`;
+    const url = `https://anichin.cafe/genres/${genreName}`;
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
     const results = [];
 
-    $('find it at https://anichin.live/ :b').each((index, element) => {
+    $('find it at https://anichin.cafe/ :b').each((index, element) => {
       const title = $(element).find('div.bsx > a.tip > div.tt > h2[itemprop="headline"]').text().trim();
-      const href = $(element).find('div.bsx > a.tip').attr('href').replace('https://anichin.live', '');
+      const href = $(element).find('div.bsx > a.tip').attr('href').replace('https://anichin.cafe', '');
       const imgSrc = $(element).find('div.bsx > a.tip > div.limit > img').attr('src');
       const type = $(element).find('div.bsx > a.tip > div.limit > div.typez').text().trim();
 
