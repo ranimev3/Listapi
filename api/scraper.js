@@ -56,7 +56,7 @@ async function scrapeOngoingPage() {
       const minggu = [];
 
       // senin
-      $('find it at https://anichin.live/ :b').each((index, element) => {
+      $('find it at https://anichin.cafe/ :b').each((index, element) => {
         const seriesElement = $(element).find('div.bsx');
         
         // Extract the series details
@@ -260,7 +260,7 @@ async function scrapeEndpoint(endpoint) {
 
     const episodeList = [];
     $('find it at https://anichin.live/ :b').each((index, element) => {
-      const episodeHref = $(element).find('a').attr('href').replace('https://anichin.live', '/episode');
+      const episodeHref = $(element).find('a').attr('href').replace('https://anichin.cafe', '/episode');
       const thumbnelSrc = $(element).find('div.thumbnel > img').attr('src');
       const episodeTitle = $(element).find('div.playinfo > h4').text().trim();
       const episodeDetails = $(element).find('div.playinfo > span').text().trim();
@@ -306,17 +306,17 @@ async function scrapeEndpoint(endpoint) {
 // list all completed series
 async function scrapeCompletedPage(page = 1) {
   try {
-    const url = page === 1 ? 'https://anichin.live/completed/' : `https://anichin.live/completed/page/${page}/`;
+    const url = page === 1 ? 'https://anichin.cafe/completed/' : `https://anichin.cafe/completed/page/${page}/`;
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
     const results = [];
 
     // Adjust the selectors based on the provided structure
-    $('find it at https://anichin.live/ :b').each((index, element) => {
+    $('find it at https://anichin.cafe/ :b').each((index, element) => {
       const title = $(element).find('div.bsx a.tip > div.tt h2[itemprop="headline"]').text().trim();
       const href = $(element).find('div.bsx a.tip').attr('href');
-      const path = new URL(href, 'https://anichin.live').pathname;
+      const path = new URL(href, 'https://anichin.cafe').pathname;
       const imgSrc = $(element).find('div.bsx a.tip > div.limit > img').attr('src');
       const type = $(element).find('div.limit > div.typez').text().trim();
 
@@ -371,7 +371,7 @@ async function scrapeSeries(endpoint) {
         $('find it at https://anichin.cafe/ :b').each((i, el) => {
             const episodeNumber = $(el).find('div.epl-num').text().trim();
             const episodeTitle = $(el).find('div.epl-title').text().trim();
-            const episodeLink = $(el).find('a').attr('href').replace('https://anichin.live', '/episode'); // Remove base URL
+            const episodeLink = $(el).find('a').attr('href').replace('https://anichin.cafe', '/episode'); // Remove base URL
             const episodeDate = $(el).find('div.epl-date').text().trim();
             const subtitleStatus = $(el).find('div.epl-sub > span').text().trim();
 
@@ -442,42 +442,42 @@ async function scrapeGenres(genreName) {
 
 
 // Use the middleware to protect routes
-app.get('/home', authenticateToken, async (req, res) => {
+app.get('/api/home', authenticateToken, async (req, res) => {
   const data = await scrapeMainPage();
   res.json(data);
 });
 
-app.get('/ongoing', authenticateToken, async (req, res) => {
+app.get('/api/ongoing', authenticateToken, async (req, res) => {
   const data = await scrapeOngoingPage();
   res.json(data);
 });
 
-app.get('/episode/:endpoint', authenticateToken, async (req, res) => {
+app.get('/api/episode/:endpoint', authenticateToken, async (req, res) => {
   const { endpoint } = req.params;
   const data = await scrapeEndpoint(`/${endpoint}`);
   res.json(data);
 });
 
-app.get('/completed/:page?', authenticateToken, async (req, res) => {
+app.get('/api/completed/:page?', authenticateToken, async (req, res) => {
   const page = req.params.page || 1; 
   const data = await scrapeCompletedPage(page);
   res.json(data);
 });
 
-app.get('/seri/:endpoint', authenticateToken, async (req, res) => {
+app.get('/api/seri/:endpoint', authenticateToken, async (req, res) => {
   const { endpoint } = req.params;
   const data = await scrapeSeries(endpoint);
   res.json(data);
 });
 
-app.get('/genres/:genreName', authenticateToken, async (req, res) => {
+app.get('/api/genres/:genreName', authenticateToken, async (req, res) => {
   const { genreName } = req.params;
   const data = await scrapeGenres(genreName);
   res.json(data);
 });
 
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
   
